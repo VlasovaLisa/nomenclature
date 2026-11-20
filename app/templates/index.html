@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Поиск номенклатуры</title>
+  <style>
+    :root {
+      --bg: #f6f7f9; --surface: #fff; --text: #1d2330; --muted: #5f6b7a; --border: #dde2e8;
+      --accent: #2856c7; --accent-text: #fff;
+      --ok-bg: #e6f4ea; --ok-text: #1e6b34; --bad-bg: #fde8e7; --bad-text: #a52a1f;
+      --unknown-bg: #eef0f3; --unknown-text: #5f6b7a; --warn-bg: #fff4dc; --warn-text: #7a5300;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+    main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+    h1 { font-size: 22px; margin: 0 0 4px; }
+    .subtitle { color: var(--muted); margin: 0 0 20px; }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    .panel h2 { font-size: 15px; margin: 0 0 10px; }
+    form.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    input[type=text] { flex: 1 1 420px; padding: 10px 12px; font: inherit; border: 1px solid var(--border); border-radius: 6px; }
+    input[type=text]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+    button { padding: 10px 18px; font: inherit; font-weight: 600; border: 0; border-radius: 6px; background: var(--accent); color: var(--accent-text); cursor: pointer; }
+    button.secondary { background: var(--unknown-bg); color: var(--text); font-weight: 500; }
+    .hint { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+    .alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; }
+    .alert.error { background: var(--bad-bg); color: var(--bad-text); }
+    .alert.success { background: var(--ok-bg); color: var(--ok-text); }
+    .alert.warning { background: var(--warn-bg); color: var(--warn-text); }
+    .query-spec { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; }
+    .chip { background: var(--unknown-bg); border-radius: 999px; padding: 2px 10px; font-size: 13px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; vertical-align: top; padding: 10px 8px; border-bottom: 1px solid var(--border); }
+    th { font-size: 13px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+    td.name { min-width: 300px; }
+    .param { display: inline-block; padding: 2px 8px; border-radius: 4px; white-space: nowrap; font-size: 14px; }
+    .param.match { background: var(--ok-bg); color: var(--ok-text); }
+    .param.mismatch { background: var(--bad-bg); color: var(--bad-text); font-weight: 600; }
+    .param.unknown { background: var(--unknown-bg); color: var(--unknown-text); }
+    .badge { display: inline-block; margin-top: 6px; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .badge.generated { background: var(--warn-bg); color: var(--warn-text); }
+    .badge.exact { background: var(--ok-bg); color: var(--ok-text); }
+    .badge.partial { background: var(--unknown-bg); color: var(--unknown-text); }
+    ul.replacements { margin: 0; padding-left: 18px; font-size: 14px; }
+    .muted { color: var(--muted); font-size: 13px; }
+    footer { color: var(--muted); font-size: 13px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Поиск номенклатуры</h1>
+  <p class="subtitle">Сопоставление запроса клиента со справочником МТР: поиск по смыслу и сверка типа трубы, диаметра, толщины стенки и марки стали.</p>
+
+  {% if error %}<div class="alert error" role="alert">{{ error }}</div>{% endif %}
+  {% if message %}<div class="alert success" role="status">{{ message }}</div>{% endif %}
+
+  <section class="panel">
+    <h2>Поиск</h2>
+    <form class="row" action="{{ url_for('main.search') }}" method="get">
+      <input type="text" name="q" value="{{ query or '' }}" placeholder="Например: труба б/ш 89х8 К52 гр.4" aria-label="Наименование продукции" autofocus required>
+      <button type="submit">Найти</button>
+    </form>
+    <p class="hint">В справочнике {{ service.name_count }} наименований ({{ service.pair_count }} пар «Наименование – Замены»).</p>
+  </section>
+
+  {% if response %}
+  <section class="panel" aria-labelledby="results-title">
+    <h2 id="results-title">Результаты для «{{ query }}»</h2>
+    <div class="query-spec">
+      <span class="muted">Распознано в запросе:</span>
+      {% for field, label in spec_labels.items() %}
+        {% set value = response.query_spec | attr(field) %}
+        <span class="chip">{{ label }}: {% if value is none %}не указано{% elif field in ('diameter', 'wall_thickness') %}{{ value | size }}{% else %}{{ value }}{% endif %}</span>
+      {% endfor %}
+    </div>
+
+    {% if not response.has_exact_match %}
+    <div class="alert warning" role="status">
+      Точного совпадения в справочнике не найдено.
+      {% if response.results and response.results[0].is_generated %}Ниже — предполагаемая конфигурация по параметрам запроса и ближайшие позиции справочника.{% else %}Ниже — ближайшие позиции справочника, различия выделены.{% endif %}
+    </div>
+    {% endif %}
+
+    {% if response.results %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Наименование</th>
+            {% for label in spec_labels.values() %}<th>{{ label }}</th>{% endfor %}
+            <th>Замены из справочника</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in response.results %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td class="name">
+              {{ result.name }}<br>
+              {% if result.is_generated %}
+                <span class="badge generated">Предполагаемая конфигурация — требует проверки, не подтверждена поставщиком</span>
+                {% if result.assumed_group %}<div class="muted">Группа в запросе не указана и взята у ближайшей позиции справочника.</div>{% endif %}
+              {% elif result.is_exact %}
+                <span class="badge exact">Совпадают все параметры запроса</span>
+              {% else %}
+                <span class="badge partial">Есть различия</span>
+              {% endif %}
+            </td>
+            {% for field in spec_labels %}
+              {% set value = result.spec | attr(field) %}
+              {% set matched = result.comparison[field] %}
+              <td>
+                <span class="param {{ 'match' if matched is true else 'mismatch' if matched is false else 'unknown' }}"
+                      title="{{ 'совпадает с запросом' if matched is true else 'отличается от запроса' if matched is false else 'нельзя сравнить' }}">
+                  {{ '✓' if matched is true else '✗' if matched is false else '?' }}
+                  {% if value is none %}—{% elif field in ('diameter', 'wall_thickness') %}{{ value | size }}{% else %}{{ value }}{% endif %}
+                </span>
+              </td>
+            {% endfor %}
+            <td>
+              {% if result.replacements %}
+              <ul class="replacements">{% for replacement in result.replacements %}<li>{{ replacement }}</li>{% endfor %}</ul>
+              {% else %}<span class="muted">—</span>{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="muted">Ничего не найдено.</p>
+    {% endif %}
+    <p class="hint">Поиск занял {{ '%.2f' | format(seconds) }} с. Результаты — рекомендации: окончательное решение о соответствии принимает пользователь.</p>
+  </section>
+  {% endif %}
+
+  <section class="panel">
+    <h2>Справочник</h2>
+    <form class="row" action="{{ url_for('main.upload') }}" method="post" enctype="multipart/form-data">
+      <input type="file" name="catalog" accept=".xlsx" multiple aria-label="XLSX-файлы справочника" required>
+      <button type="submit" class="secondary">Загрузить справочник</button>
+    </form>
+    <p class="hint">Один или несколько XLSX-файлов со столбцами «Полное наименование МТР» и «Замены». Загруженный справочник заменяет текущий до перезапуска приложения.</p>
+  </section>
+
+  <footer>✓ — совпадает с запросом · ✗ — отличается · ? — параметр не указан в запросе или в наименовании</footer>
+</main>
+</body>
+</html>

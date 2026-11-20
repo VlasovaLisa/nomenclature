@@ -1,0 +1,362 @@
+[
+  {
+    "id": "T01",
+    "query": "тр. бесш. гр.2 159х10 К60 KCU -60",
+    "kind": "existing",
+    "expected_names": [
+      "Труба бесшовная группа 2 159х10 К60, KCU не менее 30 Дж/см2 при t=-60 град.С, KCV не менее 20 Дж/см2 при t=-60 град.С ТТТ-01.02.04-0 1"
+    ],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 159,
+      "wall_thickness": 10,
+      "steel_grade": "К60"
+    },
+    "distortions": [
+      "сокращения",
+      "без стандарта"
+    ]
+  },
+  {
+    "id": "T02",
+    "query": "Труба бесшовная 114x8 К52 группа 4",
+    "kind": "existing",
+    "expected_names": [
+      "Труба бесшовная группа 4 114х8 К52 ТТТ-01.02.04-01",
+      "Труба бесшовная группа 4 114х8 К52 ТТТ-01.02.04-01, ударная вязкость KCU не менее 39,2 Дж/см2 при t-60 град.С"
+    ],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 114,
+      "wall_thickness": 8,
+      "steel_grade": "К52"
+    },
+    "distortions": [
+      "порядок слов",
+      "латинская x"
+    ]
+  },
+  {
+    "id": "T03",
+    "query": "труба б/ш 89*8 к52 гр 4 ТТТ-01.02.04-01",
+    "kind": "existing",
+    "expected_names": [
+      "Труба бесшовная группа 4 89х8 К52 ТТТ-01.02.04-01",
+      "Труба бесшовная группа 4 89х8 К52 ТТТ-01.02.04-01, ударная вязкость KCU не менее 39,2 Дж/см2 при t-60 град.С"
+    ],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 89,
+      "wall_thickness": 8,
+      "steel_grade": "К52"
+    },
+    "distortions": [
+      "сокращения",
+      "разделитель *",
+      "регистр"
+    ]
+  },
+  {
+    "id": "T04",
+    "query": "Труба бесшовнпя группа 2 114х6 К52",
+    "kind": "existing",
+    "expected_names": [
+      "Труба бесшовная группа 2 114х6 К52 ТТТ-01.02.04-01"
+    ],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 114,
+      "wall_thickness": 6,
+      "steel_grade": "К52"
+    },
+    "distortions": [
+      "опечатка",
+      "без стандарта"
+    ]
+  },
+  {
+    "id": "T05",
+    "query": "325х8 К52 труба бесшовная гр.2",
+    "kind": "existing",
+    "expected_names": [
+      "Труба бесшовная группа 2 325х8 К52 ТТТ-01.02.04-01"
+    ],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 325,
+      "wall_thickness": 8,
+      "steel_grade": "К52"
+    },
+    "distortions": [
+      "порядок слов",
+      "сокращения"
+    ]
+  },
+  {
+    "id": "T06",
+    "query": "Труба бесш. 273х8 К52 гр.4 с внутр. и наружн. покрытием усил. типа",
+    "kind": "existing",
+    "expected_names": [
+      "Труба бесшовная группа 4 273х8 К52 с внутренним покрытием и наружным покрытием усиленного типа конструкция №1 ТТТ-01.02.04-01"
+    ],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 273,
+      "wall_thickness": 8,
+      "steel_grade": "К52"
+    },
+    "distortions": [
+      "сокращения",
+      "порядок слов"
+    ]
+  },
+  {
+    "id": "T07",
+    "query": "Труба эл/св 219х8 К48 группа 2 KCV -60",
+    "kind": "existing",
+    "expected_names": [
+      "Труба электросварная группа 2 219х8 К48 ТТТ-01.02.04-01, ударная вязкость KCV для основного металла не менее 59 Дж/см2 при t-60 град .С, ударная вязкость KCV для сварного шва не менее 40 Дж/см2 при t-60 град.С"
+    ],
+    "expected_spec": {
+      "pipe_type": "электросварная",
+      "diameter": 219,
+      "wall_thickness": 8,
+      "steel_grade": "К48"
+    },
+    "distortions": [
+      "сокращения",
+      "порядок слов"
+    ]
+  },
+  {
+    "id": "T08",
+    "query": "Труба электросварная 820х10 17Г1С-У ГОСТ 10704",
+    "kind": "existing",
+    "expected_names": [
+      "Труба электросварная 820х10 ГОСТ 10704-91 В-17Г1С-У ГОСТ 10706-76 или эквивалент"
+    ],
+    "expected_spec": {
+      "pipe_type": "электросварная",
+      "diameter": 820,
+      "wall_thickness": 10,
+      "steel_grade": "17Г1С-У"
+    },
+    "distortions": [
+      "порядок слов",
+      "неполный стандарт"
+    ]
+  },
+  {
+    "id": "T09",
+    "query": "Труба электросвраная гр. 4 1020х24 К52",
+    "kind": "existing",
+    "expected_names": [
+      "Труба электросварная группа 4 1020х24 К52 ТТТ-01.02.04-01"
+    ],
+    "expected_spec": {
+      "pipe_type": "электросварная",
+      "diameter": 1020,
+      "wall_thickness": 24,
+      "steel_grade": "К52"
+    },
+    "distortions": [
+      "опечатка",
+      "сокращения"
+    ]
+  },
+  {
+    "id": "T10",
+    "query": "Труба э/с 114х5 ст.09Г2С ГОСТ 10704-91",
+    "kind": "existing",
+    "expected_names": [
+      "Труба электросварная 114х5 ГОСТ 10704-91 В-09Г2С ГОСТ 10705-80"
+    ],
+    "expected_spec": {
+      "pipe_type": "электросварная",
+      "diameter": 114,
+      "wall_thickness": 5,
+      "steel_grade": "09Г2С"
+    },
+    "distortions": [
+      "сокращения",
+      "порядок слов"
+    ]
+  },
+  {
+    "id": "T11",
+    "query": "Труба обсадная 114х7,4 ОТТМ гр.пр. Е ГОСТ 632-80",
+    "kind": "existing",
+    "expected_names": [
+      "Труба обсадная ОТТМ-114х7,4-Е ГОСТ 632-80 А",
+      "Труба обсадная ОТТМ-114х7,4-Е ГОСТ 632-80 А или эквивалент"
+    ],
+    "expected_spec": {
+      "pipe_type": "обсадная",
+      "diameter": 114,
+      "wall_thickness": 7.4,
+      "steel_grade": "Е"
+    },
+    "distortions": [
+      "порядок слов",
+      "сокращения"
+    ]
+  },
+  {
+    "id": "T12",
+    "query": "обсадная труба ОТТМ 178х9.2 Л ГОСТ 632",
+    "kind": "existing",
+    "expected_names": [
+      "Труба обсадная ОТТМ-178х9,2-Л ГОСТ 632-80 А",
+      "Труба обсадная ОТТМ-178х9,2-Л ГОСТ 632-80 А или эквивалент"
+    ],
+    "expected_spec": {
+      "pipe_type": "обсадная",
+      "diameter": 178,
+      "wall_thickness": 9.2,
+      "steel_grade": "Л"
+    },
+    "distortions": [
+      "порядок слов",
+      "десятичная точка"
+    ]
+  },
+  {
+    "id": "T13",
+    "query": "Труба обсаднпя ОТТМ-245х7,9-Д",
+    "kind": "existing",
+    "expected_names": [
+      "Труба обсадная ОТТМ-245х7,9-Д ГОСТ 632-80 А",
+      "Труба обсадная ОТТМ-245х7,9-Д ГОСТ 632-80 А или эквивалент"
+    ],
+    "expected_spec": {
+      "pipe_type": "обсадная",
+      "diameter": 245,
+      "wall_thickness": 7.9,
+      "steel_grade": "Д"
+    },
+    "distortions": [
+      "опечатка",
+      "без стандарта"
+    ]
+  },
+  {
+    "id": "T14",
+    "query": "Труба НКТ гладкая с муфтой 73х5,5 Л исп. А ТТТ-01.02-08",
+    "kind": "existing",
+    "expected_names": [
+      "Труба НКТ бесшовная с гладкими концами с треугольной резьбой и муфтой 73х5,5-Л исполнение А ТТТ-01.02-08"
+    ],
+    "expected_spec": {
+      "pipe_type": "НКТ",
+      "diameter": 73,
+      "wall_thickness": 5.5,
+      "steel_grade": "Л"
+    },
+    "distortions": [
+      "сокращения",
+      "пропуск слов"
+    ]
+  },
+  {
+    "id": "T15",
+    "query": "НКТ 73х5.5-Л ГОСТ 633-80",
+    "kind": "existing",
+    "expected_names": [
+      "Труба НКТ 73х5,5-Л ГОСТ 633-80 А или эквивалент"
+    ],
+    "expected_spec": {
+      "pipe_type": "НКТ",
+      "diameter": 73,
+      "wall_thickness": 5.5,
+      "steel_grade": "Л"
+    },
+    "distortions": [
+      "пропуск слов",
+      "десятичная точка"
+    ]
+  },
+  {
+    "id": "T16",
+    "query": "Труба бесшовная группа 2 219х10 К48",
+    "kind": "new_combination",
+    "expected_names": [],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 219,
+      "wall_thickness": 10,
+      "steel_grade": "К48"
+    },
+    "expected_group": 2,
+    "distortions": [
+      "новая комбинация: размер есть только с К52"
+    ]
+  },
+  {
+    "id": "T17",
+    "query": "труба эл.св. 530х10 К60 гр 4",
+    "kind": "new_combination",
+    "expected_names": [],
+    "expected_spec": {
+      "pipe_type": "электросварная",
+      "diameter": 530,
+      "wall_thickness": 10,
+      "steel_grade": "К60"
+    },
+    "expected_group": 4,
+    "distortions": [
+      "новая комбинация: К60 для размера нет",
+      "сокращения"
+    ]
+  },
+  {
+    "id": "T18",
+    "query": "Труба бесшовная 168х10 К52 группа 3",
+    "kind": "new_combination",
+    "expected_names": [],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 168,
+      "wall_thickness": 10,
+      "steel_grade": "К52"
+    },
+    "expected_group": 3,
+    "distortions": [
+      "новая комбинация: размер есть только с К60",
+      "порядок слов"
+    ]
+  },
+  {
+    "id": "T19",
+    "query": "Труба электросварная группа 2 720х12 К52",
+    "kind": "new_combination",
+    "expected_names": [],
+    "expected_spec": {
+      "pipe_type": "электросварная",
+      "diameter": 720,
+      "wall_thickness": 12,
+      "steel_grade": "К52"
+    },
+    "expected_group": 2,
+    "distortions": [
+      "новая комбинация: нового размера нет в справочнике"
+    ]
+  },
+  {
+    "id": "T20",
+    "query": "тр. бесшовн. 273*12 К52 гр.4",
+    "kind": "new_combination",
+    "expected_names": [],
+    "expected_spec": {
+      "pipe_type": "бесшовная",
+      "diameter": 273,
+      "wall_thickness": 12,
+      "steel_grade": "К52"
+    },
+    "expected_group": 4,
+    "distortions": [
+      "новая комбинация: нового размера нет в справочнике",
+      "сокращения",
+      "разделитель *"
+    ]
+  }
+]
